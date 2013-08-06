@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link type="text/css" rel="stylesheet" href="/static/new_south_style.css">
+		<title>Laundry Time!!</title>
+	</head>
+
+	<body>
+
+		<h2> {{load.machine.location.dorm}} : {{load.machine.location.floor}}</h2>
+
+		{% for m in machines %}
+			{% if m.in_use=="shaking" or m.in_use=="True" %}
+				<div class="create_machine in-use" id="m_{{m.id}}">This is machine #{{m.id}}<br><br>It is a {{m.type}} in use</div><br>
+			{% else %}
+				<div class="create_machine" id="m_{{m.id}}">This is machine #{{m.id}}<br><br>It is a {{m.type}} not in use</div><br>
+			{% endif %}
+		{% endfor %}
+
+	</body>
+
+</html>

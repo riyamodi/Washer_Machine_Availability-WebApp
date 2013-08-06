@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link type="text/css" rel="stylesheet" href="/static/vce_style.css">
+		<title>Laundry Time!!</title>
+	</head>
+
+	<body>
+
+		<h1> {{load.machine.location.dorm}} : {{load.machine.location.floor}}</h2>
+
+		{% for m in machines %}
+			{% if m.in_use=="shaking" or m.in_use=="True" %}
+				{% if m.type=="Washer" %}
+					<img class="create_washer in_use" id="m_{{m.id}}" src="/static/images/washer.jpg">Machine #{{m.id}} is a {{m.type}} in use</img><br>
+				{% else %}
+					<img class="create_dryer in_use" id="m_{{m.id}}" src="/static/images/dryer.jpg">Machine #{{m.id}} is a {{m.type}} in use</img><br>
+				{% endif %}
+			{% else %}
+				{% if m.type=="Washer" %}
+					<img class="create_washer" id="m_{{m.id}}" src="/static/images/washer.jpg">Machine #{{m.id}} is a {{m.type}} not in use</img><br>
+				{% else %}
+					<img class="create_dryer" id="m_{{m.id}}" src="/static/images/dryer.jpg">Machine #{{m.id}} is a {{m.type}} not in use</img><br>
+				{% endif %}
+			{% endif %}
+		{% endfor %}
