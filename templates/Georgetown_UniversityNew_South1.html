@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link type="text/css" rel="stylesheet" href="/static/style.css">
+		<title>Laundry Time!!</title>
+	</head>
+
+	<body>
+
+		<h2> {{load.machine.location.dorm}} : {{load.machine.location.floor}}</h2>
+
+		{% for m in machines %}
+			{% if m.in_use=="shaking" or m.in_use=="True" %}
+				<div class="create_machine in-use" id="m_{{m.id}}">This is machine #{{m.id}}<br><br>It is a {{m.type}} in use</div><br>
+			{% else %}
+				<div class="create_machine" id="m_{{m.id}}">This is machine #{{m.id}}<br><br>It is a {{m.type}} not in use</div><br>
+			{% endif %}
+		{% endfor %}
+
+		<!-- {% for m in machines %}
+			<div class="rect in-use" id="m_{{m.id}}">This is machine #{{m.id}}</div><br>
+			{% if m.in_use=="shaking" or m.in_use=="True" %}
+				<h4>^ IN USE/CHANGE COLOR</h4> -->
+				<!-- then call the id?? -->
+			<!-- {% endif %}
+
+			{% if m.in_use=="still" or m.in_use=="False" %}
+				<h4>^ NOT IN USE/STAY BLUE</h4>
+			{% endif %}
+
+		{% endfor %} -->
+
+<!-- I want to go through a list of all the machines in this location. if the status is
+still or if it is false, i want to change the color of its corresponding rectange to blue. if the status is shaking or true, i want to change the color to red -->
+
+	</body>
+
+</html>

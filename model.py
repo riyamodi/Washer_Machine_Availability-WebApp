@@ -32,7 +32,7 @@ class Load(Base):
 	machine_id = Column(Integer, ForeignKey('machines.id'))
 	start_time = Column(DateTime, nullable = True) 	
 	end_time = Column(DateTime, nullable = True)
-	user_id = Column(Integer, ForeignKey('users.id'))
+	user_id = Column(Integer, ForeignKey('users.id'),nullable=True)
 
 	#should I include this relationship?
 	machine = relationship("Machine",backref=backref("load",order_by=id))
