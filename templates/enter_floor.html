@@ -1,0 +1,17 @@
+<html>
+	<body>
+		<h3>Select your floor</h3>
+		<form action = "/room_layout" method = "POST">
+			<select name="floor">
+			{% for f in floors %}
+				<option value="{{f.floor}}">{{f.floor}}</option>
+			{% endfor %}
+			</select>
+			<input type = "hidden" name = "school" value="{{school}}">
+			<input type = "hidden" name = "dorm" value="{{dorm}}">
+			<input type = "submit">
+		</form>
+
+	</body>
+
+</html>

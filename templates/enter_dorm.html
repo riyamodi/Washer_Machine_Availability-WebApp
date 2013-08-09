@@ -1,0 +1,65 @@
+<html>
+	<body>
+		<h3>Select your dorm</h3>
+		<form action = "/get_floors" method = "POST">
+			<select name="dorm">
+			{% for d in dorms %}
+				<option value="{{d.dorm}}">{{d.dorm}}</option>
+			{% endfor %}
+			</select>
+			<input type = "hidden" name = "school" value="{{school}}">
+			<input type = "submit">
+		</form>
+
+	</body>
+
+</html>
+
+
+
+
+
+<!-- html>
+	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+
+	<body>
+
+	<h3>Select your school:</h4>
+	{% for s in schools %}
+	<form method = "POST">
+		<input type="checkbox" name="school" value="{{s.school}}">{{s.school}}
+	</form>
+	{% endfor %}
+	<p><a href="/">Search again</a></p>
+
+	<form action = "/enter_dorm" method = "POST">
+		<label for = "dorm">Enter your dorm:</label>
+		<input type = "text" name = "dorm">
+		<label for = "floor">Floor #: </label>
+		<input type = "text" name = "floor">
+		<input type = "submit">
+	</form>
+	
+
+	</body>
+
+
+</html> -->
+
+<!-- questions: 1)do i need to set an initial checked value? 2)have to query after i get school (and dorm) -->
+	<script>
+	// $("input")
+	// 	.change (function(){
+	// 		if ($input.prop("checked") == true){
+	// 			console.log("testing does this print?")
+	// 		}
+
+	// 	})
+	// 	.change();
+	</script>
+	
+	<!-- {% for s in schools %}
+	<select>
+		<option value="{{s.dorm}}">{{s.dorm}}</option>
+	</select>
+	{% endfor %} -->
