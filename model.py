@@ -1,6 +1,6 @@
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine
-from sqlalchemy import Column, Integer, String, DateTime
+from sqlalchemy import Column, Integer, String, DateTime, Time
 from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship, backref
@@ -33,7 +33,7 @@ class Load(Base):
 	start_time = Column(DateTime, nullable = True) 	
 	end_time = Column(DateTime, nullable = True)
 	user_id = Column(Integer, ForeignKey('users.id'),nullable=True)
-
+	
 	#should I include this relationship?
 	machine = relationship("Machine",backref=backref("load",order_by=id))
 
@@ -45,9 +45,6 @@ class User(Base):
 
 	id = Column(Integer, primary_key = True)
 	location_id = Column(Integer, ForeignKey('locations.id'))
-	# home_dorm = Column(String(64), nullable = True, ForeignKey('location.dorm'))
-	# home_floor = Column(Integer, nullable = True)
-	# home_dorm_address = Column(String(64), nullable = True, ForeignKey('location.dorm_address'))
 	email = Column(String(64), nullable = True)
 	password = Column(String(64), nullable = True)
 	cellphone_num = Column(String(64), nullable = True)

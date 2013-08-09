@@ -7,7 +7,7 @@
 
 	<body>
 
-		<h1> {{load.machine.location.dorm}} : {{load.machine.location.floor}}</h2>
+		<h1> {{location.dorm}} : {{location.floor}}</h2>
 
 		{% for m in machines %}
 			{% if m.in_use=="shaking" or m.in_use=="True" %}

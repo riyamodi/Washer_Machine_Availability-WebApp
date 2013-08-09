@@ -1,5 +1,25 @@
 <html>
-	<body>
+	
+	<h1>Find Machine Availability!</h1>
+
+	<h3>Select your school</h3>
+	<form action = "/get_dorms"method = "POST">
+		<select name="school">
+		{% for s in schools %}
+			<option value="{{s.school}}">{{s.school}}</option>
+		{% endfor %}
+		</select>
+		<input type = "submit">
+	</form>
+
+</html>
+
+
+<!-- <label for = "school">Start by entering your school name:</label>
+		<input type = "text" name = "school">
+		<input type = "submit"> -->
+
+<!-- 	<body>
 		<h3>Add Laundry Data</h3>
 		<form action="/load_info">
 			<label for="machine_id">Enter machine_id</label>
@@ -7,6 +27,4 @@
 			<label for="user_id">Enter user_id</label>
 			<input type="text" name="user_id"/><br>
 			<input type="submit">
-	</body>
-
-</html>
+	</body> -->
