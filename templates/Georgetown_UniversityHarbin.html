@@ -25,6 +25,11 @@
 			{% endif %}
 		{% endfor %}
 
+		<h2> Closest 5 laundry rooms to you: </h2>
+		{% for r in rooms %}
+			<p><a href="/room_layout?school={{r.school}}&dorm={{r.dorm}}&floor={{r.floor}}">{{r.dorm}}: {{r.floor}}</a></p>
+		{% endfor %}
+
 
 <!-- different type of logic: -->
 

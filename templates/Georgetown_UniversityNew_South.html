@@ -25,6 +25,32 @@
 			{% endif %}
 		{% endfor %}
 
+		<h2> Closest 5 laundry rooms to you: </h2>
+		{% for r in rooms %}
+			<p><a href="/room_layout?school={{r.school}}&dorm={{r.dorm}}&floor={{r.floor}}">{{r.dorm}}: {{r.floor}}</a></p>
+		{% endfor %}
+
+		<!-- <h2> Closest 5 laundry rooms to you: </h2>
+		<form id="myform" action="/room_layout" method="POST">
+		{% for r in rooms %}
+			<a href="#" id="mylink">{{r.dorm}}: {{r.floor}}</a><br>
+			<input type="hidden" name="school" value="{{r.school}}"/>
+			<input type="hidden" name="dorm" value="{{r.dorm}}"/>
+			<input type="hidden" name="floor" value="{{r.floor}}"/>
+		{% endfor %}
+		</form> -->
+
+		 <script>
+		// window.onload = function(){
+		// 	document.getElementById('mylink').onclick=function(){
+		// 		document.getElementById('myform').submit();
+		// 		return false;
+		// 	}
+		// }
+		// </script>
+
+
+
 	</body>
 
 </html>

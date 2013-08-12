@@ -163,12 +163,12 @@ def get_floors():
 	floors = model.session.query(model.Location.floor).filter_by(dorm=dorm).group_by(model.Location.floor).all()
 	return render_template("enter_floor.html", floors=floors, dorm = dorm, school = school)
 
-@app.route("/room_layout", methods=["POST"])
+@app.route("/room_layout", methods=["GET","POST"])
 def room_layout():
 
-	floor = request.form['floor']
-	school = request.form['school']
-	dorm = request.form['dorm']
+	floor = request.values['floor']
+	school = request.values['school']
+	dorm = request.values['dorm']
 	
 	#query for location id that matches the school, dorm, floor
 	###how to do this for VCW because it doesn't have a laundry machine??
@@ -180,10 +180,23 @@ def room_layout():
 	underscore_school = school.replace(' ', '_')
 	underscore_dorm = dorm.replace(' ', '_')
 
-	#####need to do test cases for dorms that don't have an html pg because there are no 
+	#need to do test cases for dorms that don't have an html pg because there are no 
 	#laundry rooms. want to just show them the closest laundry rooms to them
 
-	return render_template("%s%s.html" %(underscore_school,underscore_dorm), location=location, machines=all_machines) 
+	#make list of closest rooms' ids
+	room_list = location.closest_rooms.split(",")
+	print "room_list: ", room_list
+	#make the elements of the list integers
+	room_list = [int(i) for i in room_list]
+	print "room_list ints: ", room_list
+	#search for laundry objects whose id matches with the ids of the closest rooms
+	#add results to a list called "rooms"
+	rooms = []
+	for rm_id in room_list:
+		rooms.append(model.session.query(model.Location).filter_by(id=rm_id).one())
+	print "list of room objects: ", rooms
+
+	return render_template("%s%s.html" %(underscore_school,underscore_dorm), location=location, machines=all_machines, rooms=rooms) 
 
 app.secret_key="""oiueorijwr902irkjklak"""
 	
