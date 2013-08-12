@@ -60,6 +60,7 @@ class Location(Base):
 	dorm = Column(String(64))
 	dorm_address = Column(String(64), nullable = True)
 	floor = Column(Integer)
+	closest_rooms = Column(String(64), nullable = True)
 
 class Waiting_List(Base):	
 	__tablename__ = "waiting_list"

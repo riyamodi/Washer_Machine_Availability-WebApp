@@ -12,6 +12,7 @@ app = Flask(__name__)
 @app.route("/", methods=['GET','POST'])
 def index():
 	
+	# return render_template("haversine.html")
 	schools = model.session.query(model.Location).group_by(model.Location.school).all()	
 	return render_template("homepage.html", schools=schools)
 
@@ -57,7 +58,7 @@ def new_load():
 	
 	# Account Sid and Auth Token
 	# account_sid = "AC66a7dc1fa19168fb9cf082c3f0cf8d30"
-	# auth_token = "c19556f5039fefb828e2688e1cee25ef"
+	# auth_token = ##add back in" "
 	# client = TwilioRestClient(account_sid, auth_token)
 
 	#*************
@@ -136,10 +137,7 @@ def new_load():
 	return render_template("%s%s.html" %(underscore_school,underscore_dorm),load=l,machines=all_machines) 
 	
 	#************************************************************************
-	#for now, I'm going to assume the layout of the laundry room on each floor 
-	#is the same within a dorm
-	#if I want to create a different html file for each floor, add a %d after %s to represent the floor number
-	#************************************************************************
+	#for now, I'm going to assume the layout of the laundry room on each floor is the same within a dorm
 
 @app.route("/get_dorms", methods=["POST"])
 def get_dorm():
@@ -181,6 +179,9 @@ def room_layout():
 	#replace the spaces in school & dorm names with an underscore to call appropriate template
 	underscore_school = school.replace(' ', '_')
 	underscore_dorm = dorm.replace(' ', '_')
+
+	#####need to do test cases for dorms that don't have an html pg because there are no 
+	#laundry rooms. want to just show them the closest laundry rooms to them
 
 	return render_template("%s%s.html" %(underscore_school,underscore_dorm), location=location, machines=all_machines) 
 
