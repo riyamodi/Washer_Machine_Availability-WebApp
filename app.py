@@ -62,34 +62,12 @@ def new_load():
 	# add_to_database(l)
 	# print "start time is: ", l.start_time
 
-	
-
 	# else:
 	# 	l.end_time = datetime.datetime.today()
 	# 	print "end time is: ", l.end_time
 
-	# add_to_database(l)
-
-
+	# add_to_database(l)	
 	
-	# Account Sid and Auth Token
-	# account_sid = "AC66a7dc1fa19168fb9cf082c3f0cf8d30"
-	# auth_token = ##add back in" "
-	# client = TwilioRestClient(account_sid, auth_token)
-
-	#*************
-	# if l.machine.in_use == "shaking":
-	# 	l.start_time = time.time()
-	# 	#start_time = time.time()
-	# 	#print "start_time: ", start_time
-	# 	#convert start_time into datetime type
-	# 	#l.start_time = datetime.datetime.fromtimestamp(start_time)
-	# 	print "l.start_time: ", l.start_time
-	# 	model.session.add(l)
-	# 	model.session.commit()
-	# 	model.session.refresh(l)
-	#******************
-
 	# if l.machine.type == "Washer":
 	# 	#duration = 1800	#duration = 30mins or 1800secs
 	# 	duration = 90
@@ -110,33 +88,6 @@ def new_load():
 	# 		print "MESSAGE: ", message.sid
 
 
-
-	###################
-	#this will all be specific to a machine, right?......
-
-	#what i want to do, store a start time for a machine
-	#when i get a "still" message for that same machine, store
-	#the end time.
-
-	# if l.machine.in_use == "shaking":
-	# 	l.start_time = time.time()
-	# 	print "start_time in seconds: ", l.start_time
-	# 	print "actual start time: ", datetime.datetime.fromtimestamp(l.start_time).strftime('%Y-%m-%d %H:%M:%S')
-
-	# else:
-	# 	l.end_time = time.time()
-	# 	print "end_time in seconds: ", l.end_time
-	# 	print "actual end time: ", datetime.datetime.fromtimestamp(l.end_time).strftime('%Y-%m-%d %H:%M:%S')
-
-	# try: 
-	# 	duration = l.end_time - l.start_time
-	# 	print "duration is: ", duration
-	# 	print "actual duration is: ", datetime.datetime.fromtimestamp(duration).strftime('%Y-%m-%d %H:%M:%S')
-	# except TypeError:
-	# 	print "no end time"
-	
-	# model.session.add(l)
-	# model.session.commit()
 
 	#************************************************************************
 	#************************************************************************
@@ -210,8 +161,7 @@ def room_layout():
 	#make the elements of the list integers
 	room_list = [int(i) for i in room_list]
 	print "room_list ints: ", room_list
-	#search for laundry objects whose id matches with the ids of the closest rooms
-	#add results to a list called "rooms"
+	#search for laundry objects whose id matches with the ids of the closest rooms add results to a list called "rooms"
 	rooms = []
 	for rm_id in room_list:
 		rooms.append(model.session.query(model.Location).filter_by(id=rm_id).one())
