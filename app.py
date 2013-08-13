@@ -1,8 +1,9 @@
 from flask import Flask, render_template, redirect, request, flash, session, g, url_for
 from twilio.rest import TwilioRestClient
 from sqlalchemy import distinct
+from datetime import datetime, timedelta
 import model
-import datetime
+#import datetime
 import time
 import re
 
@@ -35,16 +36,33 @@ def new_load():
 	l.machine.in_use = request.args.get("vibration")	
 	
 	#remove the brackets that are from the senor's status request * #get a sub-string of a string instead
-	l.machine.in_use = l.machine.in_use.replace('[','')
-	l.machine.in_use = l.machine.in_use.replace(']','')
+	# l.machine.in_use = l.machine.in_use.replace('[','')
+	# l.machine.in_use = l.machine.in_use.replace(']','')
 	add_to_database(machine)
+
+	print "machine_status is: ", l.machine.in_use
+	print "machine: ", machine
+	print "machine's location id: ", l.machine.location_id
+
+	if l.machine.in_use == "shaking":
+		l.start_time = datetime.today()
+		print "start time is: ", l.start_time
+		add_to_database(l)
+
+	if l.machine.in_use == "still":
+		l.end_time = datetime.today()
+		print "end time is: ", l.end_time
+		add_to_database(l)
+
+	return "committed new load!!"
 
 	#creates two entries into loads table, one for start time and one for end time, 
 	#i want just one entry with both start and end time could use update, but how to query for it?
-	if l.machine.in_use == "shaking":
-		l.start_time = datetime.datetime.today()
-		print "start time is: ", l.start_time
-		add_to_database(l)
+	# l.start_time = request.args.get("start")
+	# add_to_database(l)
+	# print "start time is: ", l.start_time
+
+	
 
 	# else:
 	# 	l.end_time = datetime.datetime.today()
@@ -52,9 +70,7 @@ def new_load():
 
 	# add_to_database(l)
 
-	print "machine_status is: ", l.machine.in_use
-	print "machine: ", machine
-	print "machine's location id: ", l.machine.location_id
+
 	
 	# Account Sid and Auth Token
 	# account_sid = "AC66a7dc1fa19168fb9cf082c3f0cf8d30"
@@ -122,19 +138,22 @@ def new_load():
 	# model.session.add(l)
 	# model.session.commit()
 
-	
-	location = model.session.query(model.Location).filter_by(id=l.machine.location_id).one()
-	print "specific location: ", l.machine.location.school,l.machine.location.dorm,l.machine.location.floor
-	
-	#get all the machines at the specified location id
-	all_machines = model.session.query(model.Machine).filter_by(location_id=l.machine.location_id).all()
-	print "all_machines: ", all_machines
+	#************************************************************************
+	#************************************************************************
+	#**************************JUST COMMENTED OUT 8/13*****************************
 
-	#replace the spaces in school or dorm names with a underscore in order to call appropriate template
-	underscore_school = l.machine.location.school.replace(' ', '_')
-	underscore_dorm = l.machine.location.dorm.replace(' ', '_')
+	# location = model.session.query(model.Location).filter_by(id=l.machine.location_id).one()
+	# print "specific location: ", l.machine.location.school,l.machine.location.dorm,l.machine.location.floor
+	
+	# #get all the machines at the specified location id
+	# all_machines = model.session.query(model.Machine).filter_by(location_id=l.machine.location_id).all()
+	# print "all_machines: ", all_machines
 
-	return render_template("%s%s.html" %(underscore_school,underscore_dorm),load=l,machines=all_machines) 
+	# #replace the spaces in school or dorm names with a underscore in order to call appropriate template
+	# underscore_school = l.machine.location.school.replace(' ', '_')
+	# underscore_dorm = l.machine.location.dorm.replace(' ', '_')
+
+	# return render_template("%s%s.html" %(underscore_school,underscore_dorm),load=l,machines=all_machines) 
 	
 	#************************************************************************
 	#for now, I'm going to assume the layout of the laundry room on each floor is the same within a dorm
@@ -182,6 +201,8 @@ def room_layout():
 
 	#need to do test cases for dorms that don't have an html pg because there are no 
 	#laundry rooms. want to just show them the closest laundry rooms to them
+	if not all_machines:
+		return render_template("%s%s.html" %(underscore_school,underscore_dorm), location=location, machines=all_machines) 
 
 	#make list of closest rooms' ids
 	room_list = location.closest_rooms.split(",")
