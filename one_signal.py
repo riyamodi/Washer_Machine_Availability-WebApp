@@ -5,16 +5,12 @@ import time
 from datetime import datetime, timedelta
 
 
-
 def signal():
 
 	vibration = "shaking"
-	m_id = 3
+	m_id = 5
 
 	send_url(vibration,m_id)
-
-	# urllib.urlopen("http://localhost:5000/load_info?vibration=%s&id=%d" % (vibration, m_id))
-	# print "ping machine %d as %s" % (m_id,vibration)
 
 	send_text.pre_text(m_id)
 
@@ -26,33 +22,11 @@ def signal():
 
 	send_text.done_text(m_id)
 
-	# urllib.urlopen("http://localhost:5000/load_info?vibration=%s&id=%d" % (vibration, m_id))
-	# print "ping machine %d as %s" % (m_id,vibration)
-
-	# if machine.type == "Dryer":
-	# 	time.sleep(30)
-	# 	vibration = "still"
-	# 	urllib.urlopen("http://localhost:5000/load_info?vibration=%s&id=%d" % (vibration, m_id))
-	# 	print "ping machine %d as %s" % (m_id,vibration)
-
 def send_url(vibration, m_id):
 	
 	urllib.urlopen("http://localhost:5000/load_info?vibration=%s&id=%d" % (vibration, m_id))
 	print "ping machine %d as %s" % (m_id,vibration)
 
-
-
-	
-
-	#time.sleep(45)
-
-	# if vibration == "shaking":
-	# 	vibration = "still"
-	# else:
-	# 	vibration = "shaking"
-
-	# urllib.urlopen("http://localhost:5000/load_info?vibration=%s&id=3" % vibration)
-	# print "ping machine 3 as %s" % vibration
 
 if __name__ == "__main__":
 	signal()
