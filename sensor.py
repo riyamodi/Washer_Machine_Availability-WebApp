@@ -21,3 +21,7 @@ while True:
 
 
 #need to keep track of start time on the sensor side
+
+#how to make this more complicated
+#what i want: if a machine is a washer--to send the still message 60 seconds after it's start time
+#what i want: if a machine is a dryer--to send the still message 90 seconds after it's start time

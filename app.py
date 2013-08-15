@@ -3,6 +3,7 @@ from twilio.rest import TwilioRestClient
 from sqlalchemy import distinct
 from datetime import datetime, timedelta
 import model
+import floor_text
 #import datetime
 import time
 import re
@@ -47,12 +48,17 @@ def new_load():
 	if l.machine.in_use == "shaking":
 		l.start_time = datetime.today()
 		print "start time is: ", l.start_time
-		add_to_database(l)
-
-	if l.machine.in_use == "still":
-		l.end_time = datetime.today()
+		if l.machine.type == "Washer":
+			l.end_time = l.start_time + timedelta(seconds=60)
+		if l.machine.type == "Dryer":
+			l.end_time = l.start_time + timedelta(seconds=90)
 		print "end time is: ", l.end_time
 		add_to_database(l)
+
+	# if l.machine.in_use == "still":
+	# 	l.end_time = datetime.today()
+	# 	print "end time is: ", l.end_time
+	# 	add_to_database(l)
 
 	return "committed new load!!"
 
@@ -168,6 +174,36 @@ def room_layout():
 	print "list of room objects: ", rooms
 
 	return render_template("%s%s.html" %(underscore_school,underscore_dorm), location=location, machines=all_machines, rooms=rooms) 
+
+@app.route("/send_text", methods=["GET","POST"])
+def send_text():
+	print "in function"
+	
+	floor = request.values['floor']
+	school = request.values['school']
+	dorm = request.values['dorm']
+
+	print "DID THIS PRINT: ", school, dorm, floor
+
+	#get the location (id)
+	location = model.session.query(model.Location).filter_by(school=school,dorm=dorm,floor=floor).one()
+	print "location.id: ", location.id
+
+	notification = model.Waiting_List()
+	print "notification: ", notification
+	#set notification location id column
+	notification.location_id = location.id
+	print "notification.location_id: ", notification.location_id
+	#add info to the database
+	add_to_database(notification)
+	print "added notification request to database"
+
+	flash("Request recorded")
+
+	return redirect ("/room_layout?school=%s&dorm=%s&floor=%s" %(school,dorm,floor))
+	#return render_template("%s%s.html" %(underscore_school,underscore_dorm), location=location, machines=all_machines, rooms=rooms) 
+
+
 
 app.secret_key="""oiueorijwr902irkjklak"""
 	

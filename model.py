@@ -68,8 +68,8 @@ class Waiting_List(Base):
 	id = Column(Integer, primary_key = True)
 	location_id = Column(Integer, ForeignKey('locations.id'))
 	machine_id = Column(Integer, ForeignKey ('machines.id'),nullable = True)
-	user_id = Column(Integer, ForeignKey('users.id'))
+	user_id = Column(Integer, ForeignKey('users.id'),nullable = True)
 
-	location = relationship("Location",backref=backref("waiting_lists",order_by=id))
+	location = relationship("Location",backref=backref("waiting_list",order_by=id))
 	
 

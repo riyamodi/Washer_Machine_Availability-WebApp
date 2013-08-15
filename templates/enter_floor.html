@@ -1,7 +1,11 @@
 <html>
+	<head>
+		<link type="text/css" rel="stylesheet" href="/static/homepage.css">
+		<title>Laundry Time!!</title>
+	</head>
 	<body>
-		<h3>Select the floor you normally do laundry in</h3>
-		<form action = "/room_layout" method = "POST">
+		<h3 id="params">Select the floor you normally do laundry in</h3>
+		<form action = "/room_layout" method = "POST" id = "enter_info">
 			<select name="floor">
 			{% for f in floors %}
 				<option value="{{f.floor}}">{{f.floor}}</option>
