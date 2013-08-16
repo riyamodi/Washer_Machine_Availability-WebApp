@@ -2,6 +2,9 @@ import floor_text
 import time
 import model
 
+#QUESTION: to keep texting.py always running, do I just put the
+#code below in one big while loop?
+
 status = "not done"
 
 while (status == "not done"):
@@ -10,7 +13,6 @@ while (status == "not done"):
 	print "loc.id: ", loc.id
 
 	print "calling PRE text"
-	#commenting this line of code out because line 17 calls the function
 	response = floor_text.pre_text(loc.id)
 
 	print "checking first if statement"

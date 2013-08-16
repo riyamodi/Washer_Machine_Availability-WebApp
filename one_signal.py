@@ -5,10 +5,10 @@ import time
 from datetime import datetime, timedelta
 
 
-def signal():
+def signal(m_id):
 
 	vibration = "shaking"
-	m_id = 2
+	#m_id = 2
 
 	send_url(vibration,m_id)
 
@@ -34,6 +34,6 @@ def send_url(vibration, m_id):
 	print "ping machine %d as %s" % (m_id,vibration)
 
 
-if __name__ == "__main__":
-	signal()
+# if __name__ == "__main__":
+# 	signal()
 	

@@ -2,14 +2,14 @@ from twilio.rest import TwilioRestClient
 import model
 from datetime import datetime, timedelta
 import time
-from sqlalchemy import type_coerce
+from sqlalchemy import desc
 
 def actual_text(m, text_body):
 	
 	#Account Sid and Auth Token
 	account_sid = "AC66a7dc1fa19168fb9cf082c3f0cf8d30"
 	#add auth_token back in
-	auth_token = "c19556f5039fefb828e2688e1cee25ef"
+	auth_token = " "
 	client = TwilioRestClient(account_sid, auth_token)
 	
 	message = client.sms.messages.create(body="%s %s %s at %s %s" %(m.type, m.id, text_body, m.location.dorm, m.location.floor), to="+15107898157", from_="+15104021338")
@@ -35,7 +35,8 @@ def pre_text(l_id):
 			print "m.in_use: ", m.in_use
 			if m.in_use == "shaking":
 				text_body = "will be available in 30 seconds"
-				load = model.session.query(model.Load).filter_by(machine_id=m.id).first()
+				load = model.session.query(model.Load).order_by(desc(model.Load.id)).filter(model.Load.machine_id==m.id).first()
+				print "load id: ", load.id
 				if m.type== "Washer":
 					if datetime.now() > timedelta(seconds=30) + load.start_time:
 						actual_text(m, text_body)
@@ -74,21 +75,13 @@ def done_text(l_id):
 			print "m.id: ", m.id
 			print "m.in_use: ", m.in_use
 			if m.in_use == "still":
-				load = model.session.query(model.Load).filter_by(machine_id=m.id).first()
-				print "done load: ", load
+				load = model.session.query(model.Load).order_by(desc(model.Load.id)).filter(model.Load.machine_id==m.id, model.Load.start_time!=None).first()
+				print "load id: ", load.id
 				print "done load.end_time: ", load.end_time
-				if m.type== "Washer":
-					if datetime.now() > load.end_time:
-					#if datetime.now() > timedelta(seconds=60) + m.load.start_time:
-						actual_text(m, text_body)
-						return
-					
-				if m.type == "Dryer":
-					if datetime.now() > load.end_time:
-					#if datetime.now() > timedelta(seconds=90) + m.load.start_time:
-						actual_text(m, text_body)
-						return
-						
+				if datetime.now() > load.end_time:
+					actual_text(m, text_body)
+					return
+
 			model.session.expire(m)
 
 		time.sleep(3)

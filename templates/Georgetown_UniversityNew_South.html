@@ -14,8 +14,9 @@
 			<input type = "hidden" name = "school" value="{{location.school}}">
 			<input type = "hidden" name = "dorm" value="{{location.dorm}}">
 			<input type = "hidden" name = "floor" value="{{location.floor}}">
-			<input type = "submit" class="button" value="Send me a text">
+			<input type = "submit" class="button" value="Text me!">
 		</form>
+
 
 		{% for m in machines %}
 			{% if m.in_use=="shaking" or m.in_use=="True" %}

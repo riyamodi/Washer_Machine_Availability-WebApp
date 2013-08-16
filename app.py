@@ -36,9 +36,6 @@ def new_load():
 	#get machine status from sensor
 	l.machine.in_use = request.args.get("vibration")	
 	
-	#remove the brackets that are from the senor's status request * #get a sub-string of a string instead
-	# l.machine.in_use = l.machine.in_use.replace('[','')
-	# l.machine.in_use = l.machine.in_use.replace(']','')
 	add_to_database(machine)
 
 	print "machine_status is: ", l.machine.in_use
@@ -55,65 +52,7 @@ def new_load():
 		print "end time is: ", l.end_time
 		add_to_database(l)
 
-	# if l.machine.in_use == "still":
-	# 	l.end_time = datetime.today()
-	# 	print "end time is: ", l.end_time
-	# 	add_to_database(l)
-
 	return "committed new load!!"
-
-	#creates two entries into loads table, one for start time and one for end time, 
-	#i want just one entry with both start and end time could use update, but how to query for it?
-	# l.start_time = request.args.get("start")
-	# add_to_database(l)
-	# print "start time is: ", l.start_time
-
-	# else:
-	# 	l.end_time = datetime.datetime.today()
-	# 	print "end time is: ", l.end_time
-
-	# add_to_database(l)	
-	
-	# if l.machine.type == "Washer":
-	# 	#duration = 1800	#duration = 30mins or 1800secs
-	# 	duration = 90
-	# 	text_time = l.start_time + 45
-	# 	if time.time() == text_time:
-	# 		message = client.sms.messages.create(body="machine will be available in 45 seconds",
-	# 											to="+5107898157",
-	# 											from_="+15104021338")
-	# 		print "MESSAGE: ", message.sid
-	# else:
-	# 	#duration = 3600
-	# 	duration = 120
-	# 	text_time = l.start_time + 60
-	# 	if time.time() == text_time:
-	# 		message = client.sms.messages.create(body="machine will be available in 1 minute",
-	# 											to="+5107898157",
-	# 											from_="+15104021338")
-	# 		print "MESSAGE: ", message.sid
-
-
-
-	#************************************************************************
-	#************************************************************************
-	#**************************JUST COMMENTED OUT 8/13*****************************
-
-	# location = model.session.query(model.Location).filter_by(id=l.machine.location_id).one()
-	# print "specific location: ", l.machine.location.school,l.machine.location.dorm,l.machine.location.floor
-	
-	# #get all the machines at the specified location id
-	# all_machines = model.session.query(model.Machine).filter_by(location_id=l.machine.location_id).all()
-	# print "all_machines: ", all_machines
-
-	# #replace the spaces in school or dorm names with a underscore in order to call appropriate template
-	# underscore_school = l.machine.location.school.replace(' ', '_')
-	# underscore_dorm = l.machine.location.dorm.replace(' ', '_')
-
-	# return render_template("%s%s.html" %(underscore_school,underscore_dorm),load=l,machines=all_machines) 
-	
-	#************************************************************************
-	#for now, I'm going to assume the layout of the laundry room on each floor is the same within a dorm
 
 @app.route("/get_dorms", methods=["POST"])
 def get_dorm():
@@ -158,7 +97,9 @@ def room_layout():
 
 	#need to do test cases for dorms that don't have an html pg because there are no 
 	#laundry rooms. want to just show them the closest laundry rooms to them
+	#!!! ONCE i get closest rooms for all places, then i will delete this if statement code
 	if not all_machines:
+		print "THIS IS WHAT WAS TRIGGERED"
 		return render_template("%s%s.html" %(underscore_school,underscore_dorm), location=location, machines=all_machines) 
 
 	#make list of closest rooms' ids
@@ -202,7 +143,6 @@ def send_text():
 
 	return redirect ("/room_layout?school=%s&dorm=%s&floor=%s" %(school,dorm,floor))
 	#return render_template("%s%s.html" %(underscore_school,underscore_dorm), location=location, machines=all_machines, rooms=rooms) 
-
 
 
 app.secret_key="""oiueorijwr902irkjklak"""
