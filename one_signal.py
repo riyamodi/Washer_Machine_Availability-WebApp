@@ -15,7 +15,8 @@ def signal():
 	#commented out to test texting.py
 	#send_text.pre_text(m_id)
 
-	time.sleep(30)
+	#time.sleep(30)
+	time.sleep(60)
 	
 	#i don't even need this do i
 	vibration = "still"
