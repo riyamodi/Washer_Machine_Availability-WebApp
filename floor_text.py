@@ -62,7 +62,7 @@ def done_text(l_id):
 
 	while True:
 		#get a list of the machines on the page
-		machines = model.session.query(model.Machine).filter_by(location_id=l_id).all()
+		machines = model.session.query(model.Machine).filter_by(location_id=l_id, in_use="still").all()
 		print "machines: ", machines
 
 		print "current time is: ", datetime.today()
@@ -88,6 +88,8 @@ def done_text(l_id):
 					#if datetime.now() > timedelta(seconds=90) + m.load.start_time:
 						actual_text(m, text_body)
 						return
+						
+			model.session.expire(m)
 
 		time.sleep(3)
 
