@@ -16,7 +16,7 @@ def signal():
 	#send_text.pre_text(m_id)
 
 	#time.sleep(30)
-	time.sleep(30)
+	time.sleep(60)
 	
 	#i don't even need this do i
 	vibration = "still"
@@ -34,6 +34,6 @@ def send_url(vibration, m_id):
 	print "ping machine %d as %s" % (m_id,vibration)
 
 
-# if __name__ == "__main__":
-# 	signal()
+if __name__ == "__main__":
+	signal()
 	

@@ -21,20 +21,29 @@ while (status == "not done"):
 
 	print "checking first if statement"
 	
-	if (response == "sent pre_text"):
+	if (response[0] == "sent pre_text"):
 		print "calling DONE text"
-		floor_text.done_text(requested_machine)
+		response2=floor_text.done_text(requested_machine)
+		print "sleeping for 30 seconds"
+		print "response2[1]: ", response2[1]
+		time.sleep(30)
+		print "after sleeping, response2[1].in_use: ", response2[1].in_use
+		if response2[1].in_use == "still":
+			print "WASHER HAS NOT STARTED AGAIN TEXT NEXT PERSON!!!"
+			text_body = "was not claimed, it's YOURS"
+			floor_text.actual_text(response[1],text_body)
+			print "sent wait list text"
 		status = "done"
-	if (response == "sent done_text"):
+	if (response[0] == "sent done_text"):
 		print "should have gotten texts"
+		print "the machine that was returned is: ", response[1].id
+		print "sleeping for 30 seconds"
+		time.sleep(30)
+		if response[1].in_use == "still":
+			print "WASHER HAS NOT STARTED AGAIN TEXT NEXT PERSON!!!"
+			text_body = "was not claimed, it's YOURS"
+			floor_text.actual_text(response[1],text_body)
+			print "sent wait list text"
 		status = "done"
-
-
-	#i can instead check to see if the waiting list column "status". so i have a 
-	#pre-text status column and a done-text status column. after one of them get texted
-	#in floor_text.py (before the return) update the database. so if pre-text is sent but
-	#done-text is not sent, [then call floor_text.done_text(loc.id) NO] continue while loop
-	#if both statuses read "sent" then break
-	#is sent  then i stop otherwise i keep running this until they are all true
-
+	
 
