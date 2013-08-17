@@ -14,7 +14,16 @@
 			<input type = "hidden" name = "school" value="{{location.school}}">
 			<input type = "hidden" name = "dorm" value="{{location.dorm}}">
 			<input type = "hidden" name = "floor" value="{{location.floor}}">
-			<input type = "submit" class="button" value="Text me!">
+			<input type = "hidden" name = "type" value="Washer">
+			<input type = "submit" class="button" value="Text me for a Washer!">
+		</form>
+
+		<form action = "/send_text" method="POST">
+			<input type = "hidden" name = "school" value="{{location.school}}">
+			<input type = "hidden" name = "dorm" value="{{location.dorm}}">
+			<input type = "hidden" name = "floor" value="{{location.floor}}">
+			<input type = "hidden" name = "type" value="Dryer">
+			<input type = "submit" class="button" value="Text me for a Dryer!">
 		</form>
 
 

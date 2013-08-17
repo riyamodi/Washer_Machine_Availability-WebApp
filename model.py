@@ -23,7 +23,7 @@ class Machine(Base):
 	location_id = Column(Integer, ForeignKey('locations.id'))
 
 	location = relationship("Location",backref=backref("machines",order_by=id))
-	waiting_list = relationship("Waiting_List",backref=backref("machines",order_by=id))
+	#waiting_list = relationship("Waiting_List",backref=backref("machines",order_by=id))
 
 class Load(Base):
 	__tablename__ = "loads"
@@ -34,10 +34,7 @@ class Load(Base):
 	end_time = Column(DateTime, nullable = True)
 	user_id = Column(Integer, ForeignKey('users.id'),nullable=True)
 	
-	#should I include this relationship?
 	machine = relationship("Machine",backref=backref("load",order_by=id))
-
-	#should I include this relationship?
 	user = relationship("User",backref=backref("load",order_by=id))
 
 class User(Base):
@@ -67,7 +64,8 @@ class Waiting_List(Base):
 
 	id = Column(Integer, primary_key = True)
 	location_id = Column(Integer, ForeignKey('locations.id'))
-	machine_id = Column(Integer, ForeignKey ('machines.id'),nullable = True)
+	machine_type = Column(Integer, ForeignKey('machines.type'),nullable = True)
+	#machine_id = Column(Integer, ForeignKey ('machines.id'),nullable = True)
 	user_id = Column(Integer, ForeignKey('users.id'),nullable = True)
 
 	location = relationship("Location",backref=backref("waiting_list",order_by=id))

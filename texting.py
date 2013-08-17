@@ -1,6 +1,8 @@
 import floor_text
 import time
 import model
+from sqlalchemy import desc
+
 
 #QUESTION: to keep texting.py always running, do I just put the
 #code below in one big while loop?
@@ -8,18 +10,20 @@ import model
 status = "not done"
 
 while (status == "not done"):
-	#get location_id from waiting_list
-	loc = model.session.query(model.Waiting_List).first()
-	print "loc.id: ", loc.id
+	#get request from Database
+	#requested_machine = model.session.query(model.Waiting_List).first()
+	requested_machine = model.session.query(model.Waiting_List).order_by(desc(model.Waiting_List.id)).first()
+	print "requested_machine.id: ", requested_machine.id
+	print "requested_machine.machine_type: ", requested_machine.machine_type
 
 	print "calling PRE text"
-	response = floor_text.pre_text(loc.id)
+	response = floor_text.pre_text(requested_machine)
 
 	print "checking first if statement"
 	
 	if (response == "sent pre_text"):
 		print "calling DONE text"
-		floor_text.done_text(loc.id)
+		floor_text.done_text(requested_machine)
 		status = "done"
 	if (response == "sent done_text"):
 		print "should have gotten texts"

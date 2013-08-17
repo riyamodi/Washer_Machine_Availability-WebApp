@@ -123,8 +123,9 @@ def send_text():
 	floor = request.values['floor']
 	school = request.values['school']
 	dorm = request.values['dorm']
+	machine_type = request.values['type']
 
-	print "DID THIS PRINT: ", school, dorm, floor
+	print "DID THIS PRINT: ", school, dorm, floor, machine_type
 
 	#get the location (id)
 	location = model.session.query(model.Location).filter_by(school=school,dorm=dorm,floor=floor).one()
@@ -135,6 +136,8 @@ def send_text():
 	#set notification location id column
 	notification.location_id = location.id
 	print "notification.location_id: ", notification.location_id
+	notification.machine_type = machine_type
+	print "notification.machine_type: ", notification.machine_type
 	#add info to the database
 	add_to_database(notification)
 	print "added notification request to database"

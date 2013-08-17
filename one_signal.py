@@ -5,10 +5,10 @@ import time
 from datetime import datetime, timedelta
 
 
-def signal(m_id):
+def signal():
 
 	vibration = "shaking"
-	#m_id = 2
+	m_id = 2
 
 	send_url(vibration,m_id)
 
@@ -16,7 +16,7 @@ def signal(m_id):
 	#send_text.pre_text(m_id)
 
 	#time.sleep(30)
-	time.sleep(60)
+	time.sleep(30)
 	
 	#i don't even need this do i
 	vibration = "still"
