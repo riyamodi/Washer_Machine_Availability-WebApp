@@ -1,10 +1,11 @@
-from flask import Flask, render_template, redirect, request, flash, session, g, url_for
+from flask import Flask, render_template, redirect, request, flash, session, g, url_for, jsonify, Response
 from twilio.rest import TwilioRestClient
 from sqlalchemy import distinct
 from datetime import datetime, timedelta
 import model
 import floor_text
 #import datetime
+# import json
 import time
 import re
 
@@ -15,8 +16,10 @@ app = Flask(__name__)
 def index():
 	
 	# return render_template("haversine.html")
-	schools = model.session.query(model.Location).group_by(model.Location.school).all()	
-	return render_template("homepage.html", schools=schools)
+	schools = model.session.query(model.Location).group_by(model.Location.school).all()
+	dorms = model.session.query(model.Location).group_by(model.Location.dorm).all()
+	floors = model.session.query(model.Location.floor).all()
+	return render_template("homepage.html", schools=schools) #, dorms=dorms, floors=floors)
 
 def add_to_database(letter):
 	model.session.add(letter)
@@ -54,13 +57,22 @@ def new_load():
 
 	return "committed new load!!"
 
-@app.route("/get_dorms", methods=["POST"])
-def get_dorm():
+@app.route("/get_dorms")
+def get_dorms():
 
-	school = request.form['school']
-	#get all the dorms that correspond to that dorm
-	dorms = model.session.query(model.Location.dorm).filter_by(school=school).group_by(model.Location.dorm).all()	
-	return render_template("enter_dorm.html", dorms = dorms, school = school)
+	school = request.args['school']
+	print "school: ", school
+	# #get all the dorms that correspond to that dorm
+	dorms = model.session.query(model.Location).filter_by(school=school).group_by(model.Location.dorm).all()	
+	# raise Exception(len(dorms))
+	# return jsonify(dorms=dorms)
+	dorm_list=[]
+	for dorm in dorms:
+		dorm_list.append(dorm.dorm)
+	print "dorm_list: ", dorm_list
+	return jsonify(dorms= dorm_list)
+	#return  Response(json.dumps(dorms),  mimetype='application/json')
+	#return render_template("enter_dorm.html", dorms = dorms, school = school)
 
 	# schools = model.session.query(model.Location).filter(model.Location.school.like("%" + school + "%")).group_by(model.Location.school).all()
 	
@@ -70,13 +82,18 @@ def get_dorm():
 	
 	# return render_template("enter_dorm.html", schools = schools)
 
-@app.route("/get_floors", methods=["POST"])
+@app.route("/get_floors")
 def get_floors():
 
-	dorm = request.form['dorm']
-	school = request.form['school']
+	dorm = request.args['dorm']
+	# school = request.form['school']
 	floors = model.session.query(model.Location.floor).filter_by(dorm=dorm).group_by(model.Location.floor).all()
-	return render_template("enter_floor.html", floors=floors, dorm = dorm, school = school)
+	floor_list=[]
+	for floor in floors:
+		floor_list.append(floor.floor)
+	print "floor_list: ", floor_list
+	return jsonify(floors=floor_list)
+	#return render_template("enter_floor.html", floors=floors, dorm = dorm, school = school)
 
 @app.route("/room_layout", methods=["GET","POST"])
 def room_layout():
@@ -84,6 +101,7 @@ def room_layout():
 	floor = request.values['floor']
 	school = request.values['school']
 	dorm = request.values['dorm']
+	
 	
 	#query for location id that matches the school, dorm, floor
 	###how to do this for VCW because it doesn't have a laundry machine??
@@ -146,6 +164,14 @@ def send_text():
 
 	return redirect ("/room_layout?school=%s&dorm=%s&floor=%s" %(school,dorm,floor))
 	#return render_template("%s%s.html" %(underscore_school,underscore_dorm), location=location, machines=all_machines, rooms=rooms) 
+
+@app.route("/user_text", methods=["GET","POST"])
+def user_text():
+	#get user's load type
+	machine_type=request.values['type']
+
+	return render_template("user_text.html")
+
 
 
 app.secret_key="""oiueorijwr902irkjklak"""

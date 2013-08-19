@@ -8,34 +8,83 @@
 	<h2>Find Machine Availability!</h1>
 
 	<h3>Select your school</h3>
-	<form action = "/get_dorms"method = "POST">
-		<select name="school">
+	
+	<form action = "/room_layout">
+		<select name="school" id="school">
 		{% for s in schools %}
 			<option value="{{s.school}}">{{s.school}}</option>
 		{% endfor %}
+			<option value="Fake_School">Fake School</option>
 		</select>
-		<input type = "submit">
+	
+
+		<div id="my_dorms" style="display: none;">
+		<h3>Select your dorm</h3>
+			<select name="dorm" id="dorm">
+			<!-- {% for d in dorms %} -->
+				
+			<!-- {% endfor %} -->
+			</select><br>
+		</div>
+
+		
+		<div id="my_floors" style="display: none;">	
+		<h3>Select your floor</h3>
+			<select name="floor" id="floor">
+			<!-- {% for f in floors %} -->
+				<!-- <option value="{{f.floor}}">{{f.floor}}</option> -->
+			<!-- {% endfor %} -->
+			</select><br>
+		</div>
+		
+		<input  id="sub" class="sub" type = "submit" style="display: none">
+
 	</form>
 
 	<img id="laundry_image" src="http://aiminglow.com/wp-content/uploads/2011/09/JCLittle_5-Ways-to-AIM-LOW3.jpg"></img>
-	<script type=javascript>
-
-
-	</script>
+	
 
 </html>
 
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 
-<!-- <label for = "school">Start by entering your school name:</label>
-		<input type = "text" name = "school">
-		<input type = "submit"> -->
+<script>
 
-<!-- 	<body>
-		<h3>Add Laundry Data</h3>
-		<form action="/load_info">
-			<label for="machine_id">Enter machine_id</label>
-			<input type="text" name="machine_id"/><br>
-			<label for="user_id">Enter user_id</label>
-			<input type="text" name="user_id"/><br>
-			<input type="submit">
-	</body> -->
+$ ("#school").change(function(){
+	$.get("/get_dorms?school=" + $("#school").val(), function(data){
+		$("#my_dorms").show();
+		$("#dorm").empty();
+		console.log(data);
+		console.log("length " + data.length);
+		// for (var i=0; i<data.length; i++){
+		// 	$("#dorm_dropdown").append($(data[i]));
+		// }
+		$.each(data.dorms, function(index, value){
+			//you could do data.dorms[index]
+			console.log(index + " " + value);
+			$("#dorm").append("<option value=\"" + value + "\"> " + value + "</option>");
+		})
+	})
+
+});
+
+$ ("#dorm").change(function(){
+	$.get("/get_floors?dorm=" + $("#dorm").val(),function(data){
+		$("#my_floors").show();
+		$("#floor").empty();
+		console.log(data);
+		console.log("length " + data.length);
+		$.each(data.floors, function(index,value){
+			console.log(index + " " + value);
+			$("#floor").append("<option value=\"" + value + "\"> " + value + "</option>");
+
+		})
+	})
+});
+
+$ ("#floor").change(function(){
+	$("#sub").show();
+});
+
+
+</script>

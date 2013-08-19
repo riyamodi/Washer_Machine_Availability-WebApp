@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+			<link type="text/css" rel="stylesheet" href="/static/new_south_style.css">
+			<title>Laundry Time!!</title>
+	</head>
+
+	<body>
+		<h3>Enter your info so we can text you</h3>
+
+		<form action = "/user_text" method="POST">
+				<input type = "hidden" name = "type" value="Washer">
+				<input type = "submit" class="button" value="Just started Washer load!">
+		</form>
+
+		<form action = "/user_text" method="POST">
+				<input type = "hidden" name = "type" value="Dryer">
+				<input type = "submit" class="button" value="Just started Dryer load!">
+		</form>
+	</body>
+
+</html>

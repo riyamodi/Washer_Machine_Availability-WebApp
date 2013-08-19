@@ -9,6 +9,7 @@
 
 		<h1> {{location.dorm}} : {{location.floor}}</h2>
 
+	<div id="texts">
 		<!-- <a href="/send_text" class="button">Send me a text</a> -->
 		<form action = "/send_text" method="POST">
 			<input type = "hidden" name = "school" value="{{location.school}}">
@@ -25,8 +26,9 @@
 			<input type = "hidden" name = "type" value="Dryer">
 			<input type = "submit" class="button" value="Text me for a Dryer!">
 		</form>
+	</div>
 
-
+	<div id="machines">
 		{% for m in machines %}
 			{% if m.in_use=="shaking" or m.in_use=="True" %}
 				{% if m.type=="Washer" %}
@@ -42,11 +44,14 @@
 				{% endif %}
 			{% endif %}
 		{% endfor %}
+	</div>
 
+	<div id="closest">
 		<h2> Closest 5 laundry rooms to you: </h2>
 		{% for r in rooms %}
 			<p><a href="/room_layout?school={{r.school}}&dorm={{r.dorm}}&floor={{r.floor}}">{{r.dorm}}: {{r.floor}}</a></p>
 		{% endfor %}
+	</div>
 
 		<!-- <h2> Closest 5 laundry rooms to you: </h2>
 		<form id="myform" action="/room_layout" method="POST">

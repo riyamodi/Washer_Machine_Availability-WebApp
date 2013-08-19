@@ -1,3 +1,4 @@
+
 h2{
 	font-family: Optima, Verdana;
 }
@@ -18,6 +19,22 @@ h2{
 	of the image */
 	/*padding-right: -4cm;*/
 	background-color: white;
+}
+
+#machines{
+	float: left;
+	border: 3px solid purple;
+}
+
+#closest{
+	float:right;
+	border: 3px solid black;
+	margin-right: 10px;
+}
+
+#texts{
+	float:right;
+	border: 3px solid orange;
 }
 
 .in_use{
