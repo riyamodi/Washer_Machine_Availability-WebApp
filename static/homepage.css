@@ -36,6 +36,7 @@ form{
 #laundry_image{
 	margin-left: auto;
 	margin-right: auto;
+	position: absolute;
 }
 
 #sub{

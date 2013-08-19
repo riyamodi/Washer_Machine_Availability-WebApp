@@ -1,4 +1,9 @@
 
+#header{
+	font-family: Optima, Verdana;
+	text-align: center;
+}
+
 h2{
 	font-family: Optima, Verdana;
 }
@@ -23,7 +28,7 @@ h2{
 
 #machines{
 	float: left;
-	border: 3px solid purple;
+	border: 5px solid black;
 }
 
 #closest{
@@ -33,8 +38,11 @@ h2{
 }
 
 #texts{
-	float:right;
-	border: 3px solid orange;
+	/*float:right;*/
+	border: 3px solid black;
+	margin-top: 10px;
+	float: left;
+	margin-right: 20px;
 }
 
 .in_use{

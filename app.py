@@ -62,7 +62,7 @@ def get_dorms():
 
 	school = request.args['school']
 	print "school: ", school
-	# #get all the dorms that correspond to that dorm
+	#get all the dorms that correspond to that school
 	dorms = model.session.query(model.Location).filter_by(school=school).group_by(model.Location.dorm).all()	
 	# raise Exception(len(dorms))
 	# return jsonify(dorms=dorms)
@@ -71,16 +71,7 @@ def get_dorms():
 		dorm_list.append(dorm.dorm)
 	print "dorm_list: ", dorm_list
 	return jsonify(dorms= dorm_list)
-	#return  Response(json.dumps(dorms),  mimetype='application/json')
-	#return render_template("enter_dorm.html", dorms = dorms, school = school)
-
-	# schools = model.session.query(model.Location).filter(model.Location.school.like("%" + school + "%")).group_by(model.Location.school).all()
 	
-	# if not schools:
-	# 	flash("Sorry, we do not provide service for your school yet")
-	# 	return redirect("/")
-	
-	# return render_template("enter_dorm.html", schools = schools)
 
 @app.route("/get_floors")
 def get_floors():
@@ -101,12 +92,18 @@ def room_layout():
 	floor = request.values['floor']
 	school = request.values['school']
 	dorm = request.values['dorm']
-	
+
+	print floor, school, dorm
 	
 	#query for location id that matches the school, dorm, floor
 	###how to do this for VCW because it doesn't have a laundry machine??
 	location = model.session.query(model.Location).filter_by(school=school,dorm=dorm,floor=floor).first()
 	print "location: ", location
+
+	#if user tries to input a nonexistent location in the url
+	if location == None:
+		return render_template("nonexistence.html")
+
 	all_machines = model.session.query(model.Machine).filter_by(location_id=location.id).all()
 	print "all_machines: ", all_machines
 	#replace the spaces in school & dorm names with an underscore to call appropriate template
