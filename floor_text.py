@@ -9,11 +9,15 @@ def actual_text(m, text_body):
 	#Account Sid and Auth Token
 	account_sid = "AC66a7dc1fa19168fb9cf082c3f0cf8d30"
 	#add auth_token back in
-	auth_token = " "
-	client = TwilioRestClient(account_sid, auth_token)
+	auth_token = "c19556f5039fefb828e2688e1cee25ef"
 	
-	message = client.sms.messages.create(body="%s %s %s at %s %s" %(m.type, m.id, text_body, m.location.dorm, m.location.floor), to="+15107898157", from_="+15104021338")
-	print "MESSAGE: ", message.sid
+	try:
+		client = TwilioRestClient(account_sid, auth_token)
+		message = client.sms.messages.create(body="%s %s %s at %s %s" %(m.type, m.id, text_body, m.location.dorm, m.location.floor), to="+15107898157", from_="+15104021338")
+		print "MESSAGE: ", message.sid
+
+	except:
+		print "Unable to connect to Twilio"	
 
 
 def pre_text(requested_machine):
@@ -75,7 +79,7 @@ def done_text(requested_machine):
 
 		print "current time is: ", datetime.today()
 
-		text_body = "is AVAILABLE"
+		text_body = "is AVAILABLE", actual_text(m,text_body)
 
 		#go through each machine from the list of machines in a certain location
 		for m in machines:
@@ -90,7 +94,7 @@ def done_text(requested_machine):
 			# 		return
 				print "m.id: ", m.id
 				print "m.in_use: ", m.in_use
-				actual_text(m,text_body)
+				
 				return("sent done_text", m)
 
 			model.session.expire(m)

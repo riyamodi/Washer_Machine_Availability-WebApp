@@ -113,9 +113,9 @@ def room_layout():
 	#need to do test cases for dorms that don't have an html pg because there are no 
 	#laundry rooms. want to just show them the closest laundry rooms to them
 	#!!! ONCE i get closest rooms for all places, then i will delete this if statement code
-	if not all_machines:
-		print "THIS IS WHAT WAS TRIGGERED"
-		return render_template("%s%s.html" %(underscore_school,underscore_dorm), location=location, machines=all_machines) 
+	# if not all_machines:
+	# 	print "THIS IS WHAT WAS TRIGGERED"
+	# 	return render_template("%s%s.html" %(underscore_school,underscore_dorm), location=location, machines=all_machines) 
 
 	#make list of closest rooms' ids
 	room_list = location.closest_rooms.split(",")

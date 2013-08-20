@@ -24,9 +24,9 @@ while (status == "not done"):
 	if (response[0] == "sent pre_text"):
 		print "calling DONE text"
 		response2=floor_text.done_text(requested_machine)
-		print "sleeping for 30 seconds"
+		print "sleeping for 10 seconds"
 		print "response2[1]: ", response2[1]
-		time.sleep(30)
+		time.sleep(10)
 		print "after sleeping, response2[1].in_use: ", response2[1].in_use
 		if response2[1].in_use == "still":
 			print "WASHER HAS NOT STARTED AGAIN TEXT NEXT PERSON!!!"
@@ -37,8 +37,8 @@ while (status == "not done"):
 	if (response[0] == "sent done_text"):
 		print "should have gotten texts"
 		print "the machine that was returned is: ", response[1].id
-		print "sleeping for 30 seconds"
-		time.sleep(30)
+		print "sleeping for 10 seconds"
+		time.sleep(10)
 		if response[1].in_use == "still":
 			print "WASHER HAS NOT STARTED AGAIN TEXT NEXT PERSON!!!"
 			text_body = "was not claimed, it's YOURS"
