@@ -71,6 +71,8 @@ $ ("#school").change(function(){
 $ ("#dorm").change(function(){
 	$.get("/get_floors?dorm=" + $("#dorm").val(),function(data){
 		$("#my_floors").show();
+		$("#sub").show();
+
 		$("#floor").empty();
 		console.log(data);
 		console.log("length " + data.length);
@@ -82,9 +84,9 @@ $ ("#dorm").change(function(){
 	})
 });
 
-$ ("#floor").change(function(){
-	$("#sub").show();
-});
+// $ ("#floor").change(function(){
+// 	$("#sub").show();
+// });
 
 
 </script>
