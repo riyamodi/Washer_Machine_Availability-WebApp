@@ -9,7 +9,7 @@ def actual_text(m, text_body):
 	#Account Sid and Auth Token
 	account_sid = "AC66a7dc1fa19168fb9cf082c3f0cf8d30"
 	#add auth_token back in
-	auth_token = "c19556f5039fefb828e2688e1cee25ef"
+	auth_token = " "
 	
 	try:
 		client = TwilioRestClient(account_sid, auth_token)
