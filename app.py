@@ -11,20 +11,18 @@ import re
 
 app = Flask(__name__)
 
-#testing ability to get signal from Twine
-@app.route("/", methods=['GET','POST'])
-def index():
-	
-	# return render_template("haversine.html")
-	schools = model.session.query(model.Location).group_by(model.Location.school).all()
-	dorms = model.session.query(model.Location).group_by(model.Location.dorm).all()
-	floors = model.session.query(model.Location.floor).all()
-	return render_template("homepage.html", schools=schools) #, dorms=dorms, floors=floors)
-
 def add_to_database(letter):
 	model.session.add(letter)
 	model.session.commit()
 	model.session.refresh(letter)
+
+@app.route("/", methods=['GET','POST'])
+def index():
+	
+	schools = model.session.query(model.Location).group_by(model.Location.school).all()
+	dorms = model.session.query(model.Location).group_by(model.Location.dorm).all()
+	floors = model.session.query(model.Location.floor).all()
+	return render_template("homepage.html", schools=schools)
 
 @app.route("/load_info")
 def new_load():
@@ -70,21 +68,18 @@ def get_dorms():
 	for dorm in dorms:
 		dorm_list.append(dorm.dorm)
 	print "dorm_list: ", dorm_list
-	return jsonify(dorms= dorm_list)
-	
+	return jsonify(dorms= dorm_list)	
 
 @app.route("/get_floors")
 def get_floors():
 
 	dorm = request.args['dorm']
-	# school = request.form['school']
 	floors = model.session.query(model.Location.floor).filter_by(dorm=dorm).group_by(model.Location.floor).all()
 	floor_list=[]
 	for floor in floors:
 		floor_list.append(floor.floor)
 	print "floor_list: ", floor_list
 	return jsonify(floors=floor_list)
-	#return render_template("enter_floor.html", floors=floors, dorm = dorm, school = school)
 
 @app.route("/room_layout", methods=["GET","POST"])
 def room_layout():
@@ -96,7 +91,6 @@ def room_layout():
 	print floor, school, dorm
 	
 	#query for location id that matches the school, dorm, floor
-	###how to do this for VCW because it doesn't have a laundry machine??
 	location = model.session.query(model.Location).filter_by(school=school,dorm=dorm,floor=floor).first()
 	print "location: ", location
 
@@ -109,13 +103,6 @@ def room_layout():
 	#replace the spaces in school & dorm names with an underscore to call appropriate template
 	underscore_school = school.replace(' ', '_')
 	underscore_dorm = dorm.replace(' ', '_')
-
-	#need to do test cases for dorms that don't have an html pg because there are no 
-	#laundry rooms. want to just show them the closest laundry rooms to them
-	#!!! ONCE i get closest rooms for all places, then i will delete this if statement code
-	# if not all_machines:
-	# 	print "THIS IS WHAT WAS TRIGGERED"
-	# 	return render_template("%s%s.html" %(underscore_school,underscore_dorm), location=location, machines=all_machines) 
 
 	#make list of closest rooms' ids
 	room_list = location.closest_rooms.split(",")
@@ -140,7 +127,7 @@ def send_text():
 	dorm = request.values['dorm']
 	machine_type = request.values['type']
 
-	print "DID THIS PRINT: ", school, dorm, floor, machine_type
+	print "request info: ", school, dorm, floor, machine_type
 
 	#get the location (id)
 	location = model.session.query(model.Location).filter_by(school=school,dorm=dorm,floor=floor).one()
@@ -160,7 +147,6 @@ def send_text():
 	flash("Request recorded")
 
 	return redirect ("/room_layout?school=%s&dorm=%s&floor=%s" %(school,dorm,floor))
-	#return render_template("%s%s.html" %(underscore_school,underscore_dorm), location=location, machines=all_machines, rooms=rooms) 
 
 @app.route("/user_text", methods=["GET","POST"])
 def user_text():

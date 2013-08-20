@@ -28,10 +28,10 @@ def pre_text(requested_machine):
 		
 		#get a list of the machines on the page
 		machines = model.session.query(model.Machine).filter_by(location_id=requested_machine.location_id, type=requested_machine.machine_type).all()
-		print "machines: ", machines
+		# print "machines: ", machines
 
 		current_time = datetime.today()
-		print "current time is: ", current_time
+		# print "current time is: ", current_time
 
 		#go through each machine from the list of machines in a certain location
 		for m in machines:
@@ -58,7 +58,6 @@ def pre_text(requested_machine):
 				actual_text(m, text_body)
 				print "sent done_text"
 				return("sent done_text", m)
-				#return("sent done_text")
 
 			
 			model.session.expire(m)
@@ -73,9 +72,7 @@ def done_text(requested_machine):
 	while True:
 		#get a list of the machines on the page
 		machines = model.session.query(model.Machine).filter_by(location_id=requested_machine.location_id, type=requested_machine.machine_type).all()
-		#really strange that the below line didn't work....ask why
-		#machines = model.session.query(model.Machine).filter_by(location_id=requested_machine.location_id, type=requested_machine.machine_type, in_use="still").all()
-		print "machines: ", machines
+		# print "machines: ", machines
 
 		print "current time is: ", datetime.today()
 

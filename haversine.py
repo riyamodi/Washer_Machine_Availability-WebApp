@@ -78,16 +78,7 @@ def cd():
 		app.add_to_database(loc)
 		print "committed"
 
-	# pseudocode for cd():
-	# go through each location id that has machines
-	# and calculate the distance between it and all the other locations
-	# store the smallest 5 distances as a string of its corresponding ids
-
-	# store ids as a tuple dict key and the distance as the value
-	# then for each id go through all the tuples it is mentioned in and save
-	# the 5 smallest ids
-
-#FIX THE PROBLEM (no closest five for locations that don't have machines)!!!!!!
+#cd2() fixes cd()'s problem of no closest five for locations that don't have machines
 def cd2():
 
 	#get all the location ids that have machines
@@ -124,7 +115,6 @@ def cd2():
 			if curr.id == next.id:
 				continue
 			if len(next.machines) > 0:
-
 				pt1=curr.dorm_address.split(',')
 				pt2=next.dorm_address.split(',')
 				lat1=float(pt1[0])
@@ -156,85 +146,4 @@ def cd2():
 		app.add_to_database(loc)
 		print "committed"	
 
-
-
-
-
-
-	# for loc in object_list:
-	# 	for mach in m_object_list:
-	# 		print "loc: ", loc
-	# 		l=[]
-	# 		newlist=[]
-	# 		print "ID: ", loc.id
-	# 		for key in d.keys():
-	# 			#if the location id is in a key and if the key includes a location with a machine
-	# 			if loc.id in key and mach.id in key:
-	# 				#print loc.id, key
-	# 				#save that key-value pair in a list
-	# 				l.append((key,d.get(key)))
-	# 	print "l: ", l
-	# 	break
-
-
-
-
-# 	d={}
-# 	#iterate through list
-# 	for i in list_of_ids:
-# 		for j in list_of_m_ids:
-# 			if i == j:
-# 				continue
-# 			else:
-# ####################################################################################################
-# ####################################################################################################
-# ################		THIS IS WHERE I LEFT OFF!!								    ################
-# ####################################################################################################
-
-# 		for j in range(i+1, len(object_list)):
-# 			curr = object_list[i]
-# 			next = object_list[j]
-# 	# for curr in object_list[0:len(object_list)-1]:
-# 		# for next in object_list[1:len(object_list)]:
-# 			pt1=curr.dorm_address.split(',')
-# 			pt2=next.dorm_address.split(',')
-# 			lat1=float(pt1[0])
-# 			lon1=float(pt1[1])
-# 			lat2=float(pt2[0])
-# 			lon2=float(pt2[1])
-# 			d[(curr.id,next.id)]=haversine(lon1,lat1,lon2,lat2)
-# 	# print d
-
-# 	# for each id go through all the tuples it is mentioned in
-# 	for loc in object_list:
-# 		print "loc: ", loc
-# 		l=[]
-# 		newlist=[]
-# 		print "ID: ", loc.id
-# 		for key in d.keys():
-# 			#if the location id is in a key
-# 			if loc.id in key:
-# 				#print loc.id, key
-# 				#save that key-value pair in a list
-# 				l.append((key,d.get(key)))
-# 		#sort the list
-# 		l.sort(key=operator.itemgetter(1))
-# 		#save the smallest 5 values in another list
-# 		closest_five=l[:5]
-# 		# print "closest_five: ", closest_five
-# 		#then take the id from the tuple that does not match
-# 		#loc.id, and turn those ids into a string
-# 		for x in closest_five:
-# 			# print x[0][0]
-# 			if x[0][0]==loc.id:
-# 				newlist.append(x[0][1])
-# 			else:
-# 				 newlist.append(x[0][0])
-# 		#print "LIST OF IDS: ", newlist
-# 		loc.closest_rooms = ",".join(map(str,newlist))
-# 		print "FINAL STRING: ", loc.closest_rooms
-# 		# app.add_to_database(loc)
-# 		# print "committed"
-# 		#commit this string to the closest_room column in location
-# 		#[where id=loc.id <--not necessary because "loc" represents that]
 

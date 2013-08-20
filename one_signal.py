@@ -12,21 +12,11 @@ def signal():
 
 	send_url(vibration,m_id)
 
-	#commented out to test texting.py
-	#send_text.pre_text(m_id)
-
-	#time.sleep(30)
 	time.sleep(60)
 	
-	#i don't even need this do i
 	vibration = "still"
 
-	#i don't even need this do i, i think i do
-	#so the page shows that a machine is no longer in use
 	send_url(vibration,m_id)
-
-	#commented out to test texting.py
-	# send_text.done_text(m_id)
 
 def send_url(vibration, m_id):
 	

@@ -13,8 +13,16 @@
 	</div>
 
 	<div id="header">
-
 		<h1> {{location.dorm}} : {{location.floor}}</h1>
+		{% with messages = get_flashed_messages() %}
+		  {% if messages %}
+		    <ul style="list-style:none">
+		    {% for message in messages %}
+		      <li>{{ message }}</li>
+		    {% endfor %}
+		    </ul>
+		  {% endif %}
+		{% endwith %}
 	</div>
 
 
@@ -51,9 +59,9 @@
 				{% endif %}
 			{% else %}
 				{% if m.type=="Washer" %}
-					<img class="create_washer animated bounce available" id="m_{{m.id}}" src="/static/images/washer.jpg">Machine #{{m.id}} is a {{m.type}} not in use</img><br>
+					<img class="create_washer animated available" id="m_{{m.id}}" src="/static/images/washer.jpg">Machine #{{m.id}} is a {{m.type}} not in use</img><br>
 				{% else %}
-					<img class="create_dryer animated bounce available" id="m_{{m.id}}" src="/static/images/dryer_copy.jpg">Machine #{{m.id}} is a {{m.type}} not in use</img><br>
+					<img class="create_dryer animated available" id="m_{{m.id}}" src="/static/images/dryer_copy.jpg">Machine #{{m.id}} is a {{m.type}} not in use</img><br>
 				{% endif %}
 			{% endif %}
 		{% endfor %}
