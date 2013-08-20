@@ -79,7 +79,7 @@ def done_text(requested_machine):
 
 		print "current time is: ", datetime.today()
 
-		text_body = "is AVAILABLE", actual_text(m,text_body)
+		text_body = "is AVAILABLE"
 
 		#go through each machine from the list of machines in a certain location
 		for m in machines:
@@ -94,7 +94,7 @@ def done_text(requested_machine):
 			# 		return
 				print "m.id: ", m.id
 				print "m.in_use: ", m.in_use
-				
+				actual_text(m,text_body)
 				return("sent done_text", m)
 
 			model.session.expire(m)

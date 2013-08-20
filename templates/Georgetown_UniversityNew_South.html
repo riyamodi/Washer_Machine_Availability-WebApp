@@ -17,7 +17,6 @@
 		<h1> {{location.dorm}} : {{location.floor}}</h1>
 	</div>
 
-
 	<div id="texts">
 		<!-- <a href="/send_text" class="button">Send me a text</a> -->
 		<form action = "/send_text" method="POST">
@@ -37,21 +36,23 @@
 		</form>
 	</div>
 
-	
+	{% if not machines %}
+			<h3 style="text-align:center">Your floor does not have laundry machines, but you can find nearby ones</h3>
+	{% endif %}
 	
 	<div id="machines">
 		{% for m in machines %}
 			{% if m.in_use=="shaking" or m.in_use=="True" %}
 				{% if m.type=="Washer" %}
-					<img class="create_washer in_use moveup" id="m_{{m.id}}" src="/static/images/washer.jpg">Machine #{{m.id}} is a {{m.type}} in use</img><br>
+					<img class="create_washer in_use moveup bounce" id="m_{{m.id}}" src="/static/images/washer.jpg">Machine #{{m.id}} is a {{m.type}} in use</img><br>
 				{% else %}
-					<img class="create_dryer in_use_d moveup" id="m_{{m.id}}" src="/static/images/dryer_copy.jpg">Machine #{{m.id}} is a {{m.type}} in use</img><br>
+					<img class="create_dryer in_use_d moveup bounce" id="m_{{m.id}}" src="/static/images/dryer_copy.jpg">Machine #{{m.id}} is a {{m.type}} in use</img><br>
 				{% endif %}
 			{% else %}
 				{% if m.type=="Washer" %}
-					<img class="create_washer animated bounce" id="m_{{m.id}}" src="/static/images/washer.jpg">Machine #{{m.id}} is a {{m.type}} not in use</img><br>
+					<img class="create_washer animated available" id="m_{{m.id}}" src="/static/images/washer.jpg">Machine #{{m.id}} is a {{m.type}} not in use</img><br>
 				{% else %}
-					<img class="create_dryer animated bounce" id="m_{{m.id}}" src="/static/images/dryer_copy.jpg">Machine #{{m.id}} is a {{m.type}} not in use</img><br>
+					<img class="create_dryer animated available" id="m_{{m.id}}" src="/static/images/dryer_copy.jpg">Machine #{{m.id}} is a {{m.type}} not in use</img><br>
 				{% endif %}
 			{% endif %}
 		{% endfor %}

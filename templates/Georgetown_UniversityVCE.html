@@ -1,6 +1,81 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<!-- <link href="/static/bootstrap.min.css" rel="stylesheet" media="screen"> -->
+		<link type="text/css" rel="stylesheet" href="/static/new_south_style.css">
+		<title>Laundry Time!!</title>
+	</head>
+
+	<body>
+
+	<div id="home">
+		<h1><a href="/">Laundré</a></h1>
+	</div>
+
+	<div id="header">
+
+		<h1> {{location.dorm}} : {{location.floor}}</h1>
+	</div>
+
+
+	<div id="texts">
+		<!-- <a href="/send_text" class="button">Send me a text</a> -->
+		<form action = "/send_text" method="POST">
+			<input type = "hidden" name = "school" value="{{location.school}}">
+			<input type = "hidden" name = "dorm" value="{{location.dorm}}">
+			<input type = "hidden" name = "floor" value="{{location.floor}}">
+			<input type = "hidden" name = "type" value="Washer">
+			<input type = "submit" class="button" value="Text me for a Washer!">
+		</form>
+
+		<form action = "/send_text" method="POST">
+			<input type = "hidden" name = "school" value="{{location.school}}">
+			<input type = "hidden" name = "dorm" value="{{location.dorm}}">
+			<input type = "hidden" name = "floor" value="{{location.floor}}">
+			<input type = "hidden" name = "type" value="Dryer">
+			<input type = "submit" class="button" value="Text me for a Dryer!">
+		</form>
+	</div>
+
+	{% if not machines %}
+			<h3 style="text-align:center">Your floor does not have laundry machines, but you can find nearby ones</h3>
+	{% endif %}
+	
+	<div id="machines">
+		{% for m in machines %}
+			{% if m.in_use=="shaking" or m.in_use=="True" %}
+				{% if m.type=="Washer" %}
+					<img class="create_washer in_use moveup bounce" id="m_{{m.id}}" src="/static/images/washer.jpg">Machine #{{m.id}} is a {{m.type}} in use</img><br>
+				{% else %}
+					<img class="create_dryer in_use_d moveup bounce" id="m_{{m.id}}" src="/static/images/dryer_copy.jpg">Machine #{{m.id}} is a {{m.type}} in use</img><br>
+				{% endif %}
+			{% else %}
+				{% if m.type=="Washer" %}
+					<img class="create_washer animated available" id="m_{{m.id}}" src="/static/images/washer.jpg">Machine #{{m.id}} is a {{m.type}} not in use</img><br>
+				{% else %}
+					<img class="create_dryer animated available" id="m_{{m.id}}" src="/static/images/dryer_copy.jpg">Machine #{{m.id}} is a {{m.type}} not in use</img><br>
+				{% endif %}
+			{% endif %}
+		{% endfor %}
+	</div>
+
+	<div id="closest">
+		<h2> Closest 5 laundry rooms to you: </h2>
+		{% for r in rooms %}
+			<p><a href="/room_layout?school={{r.school}}&dorm={{r.dorm}}&floor={{r.floor}}">{{r.dorm}}: {{r.floor}}</a></p>
+		{% endfor %}
+	</div>
+
+
+	</body>
+
+</html>
+
+
+
+<!-- <!DOCTYPE html>
+<html>
+	<head>
 		<link type="text/css" rel="stylesheet" href="/static/vce_style.css">
 		<title>Laundry Time!!</title>
 	</head>
@@ -35,4 +110,4 @@
 		{% endfor %}
 
 	</body>
-</html>
+</html> -->

@@ -7,7 +7,6 @@ h2{
 
 #home{
 	font-family: Snell Roundhand;
-	/*border: 2px solid black;*/
 }
 
 	#home h1{
@@ -93,14 +92,17 @@ h2{
 	opacity: 1;*/
 }
 
+.available{
+	border: 7px solid #50B51D;*/
+}
 .in_use_d{
-	border: 7px solid red;
+	/*border: 7px solid red;*/
 	padding: 3px;
 	padding-left: 4px;
 }
 .in_use{
 	/*background-color: red;*/
-	border: 7px solid red;
+	/*border: 7px solid red;*/
 	padding: 2px;
 	/*transition: all 2s linear;*/
 	-webkit-animation-name: moveup;
@@ -181,22 +183,3 @@ h2{
 }
 
 
-
-
-
-
-
-/*old version: */
-/*.create_machine{
-	width:300px;
-	height:100px;
-	border:3px solid #000;
-	background-color: red;
-	color:white;
-}
-.in-use {
-	background-color: blue;
-}
-#m_1{*/
-	/*background-color: red;*/
-/*}*/
